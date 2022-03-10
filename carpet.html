@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Dywan Sierpińskiego</title>
+    <style>
+        canvas{
+            background-color: lightblue;
+            display: block;
+            border: 1px black;
+            margin: 0 auto;
+        }
+        h1{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<h1>Dywan Sierpińskiego</h1>
+<canvas id='my-can'>Narysowany dywan Sierpińskiego</canvas>
+<script>
+    let can = document.getElementById("my-can");
+    can.width = 800;
+    can.height = 800;
+    let ctx = can.getContext("2d");
+    carpet( 20, can.height-20, can.width-20, can.height-20, can.width-20, 20, 20, 20, ctx, 5);
+    console.log(20, can.height-20, can.width-20, can.height-20, can.width/2, 20 );
+    ctx.strokeStyle = 'black';
+    ctx.lineWidth = '1px';
+    ctx.stroke();
+    function carpet( x1, y1, x2, y2, x3, y3, x4, y4, c, d){
+        if ( d<1 ) {
+            c.moveTo(x1, y1);
+            c.lineTo(x2, y2);
+            c.lineTo(x3, y3);
+            c.lineTo(x4, y4);
+            c.lineTo(x1, y1);
+        } else {
+            let m = (x2-x1)/3;
+            let n = (y2-y3)/3;
+            for( let i=0; i<3; i++)
+                for (let j=0; j<3; j++){
+                    if ( !((i===j)&&i===1) ) {
+                        carpet(x1 + i * m, y1 - j * n, x1 + (i + 1) * m, y1 - j * n, x1 + (i + 1) * m, y1 - (j + 1) * n, x1 + i * m, y1 - (j + 1) * n, c, d - 1);
+                        console.log(x1 + i * m, y1 - j * n, x1 + (i + 1) * m, y1 - j * n, x1 + (i + 1) * m, y1 - (j + 1) * n, x1 + i * m, y1 - (j + 1) * n);
+                    }
+                }
+
+        }
+    }
+</script>
+</body>
+</html>
